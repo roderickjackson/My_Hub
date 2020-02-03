@@ -62,3 +62,9 @@ typings/
 
 # JetBrains IDE
 .idea
+
+# Added by dev
+DEV_README.md
+
+service_modules/env.js
+

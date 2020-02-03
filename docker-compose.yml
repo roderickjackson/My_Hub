@@ -10,13 +10,13 @@ services:
     env_file: docker-compose.env
     environment:
       SERVICES: api
-      PORT: 3000
+      PORT: 3002
     depends_on:
       - nats
     labels:
       - "traefik.enable=true"
       - "traefik.backend=api"
-      - "traefik.port=3000"
+      - "traefik.port=3002"
       - "traefik.frontend.entryPoints=http"
       - "traefik.frontend.rule=PathPrefix:/"
     networks:
@@ -56,7 +56,7 @@ services:
       - "traefik.backend=traefik"
       - "traefik.port=8080"
     ports:
-      - 3000:80
+      - 3002:80
       - 3001:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
