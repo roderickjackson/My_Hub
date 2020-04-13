@@ -10,7 +10,8 @@
     "test": "jest --coverage",
     "lint": "eslint services",
     "dc:up": "docker-compose up --build -d",
-    "dc:down": "docker-compose down"
+    "dc:down": "docker-compose down",
+    "watch": "jest --watchAll"
   },
   "keywords": [
     "microservices",
@@ -24,6 +25,7 @@
     "moleculer-repl": "^0.6.2"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.0.0",
     "bcryptjs": "^2.4.3",
     "fastest-validator": "^0.6.19",
     "jsonwebtoken": "^8.5.1",

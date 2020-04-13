@@ -1,0 +1,19 @@
+const env = require('./env')
+
+exports.DBCONNECTION = env.DBCONNECTION
+
+exports.CLIENT_URL = env.CLIENT_URL
+
+exports.TOKEN_SECRET_OR_KEY = env.TOKEN_SECRET_OR_KEY
+
+exports.JWT_ACCOUNT_ACTIVATION = env.JWT_ACCOUNT_ACTIVATION
+
+exports.SENDGRID_API_KEY = env.SENDGRID_API_KEY
+
+exports.JWT_EXPIRATION  = env.JWT_EXPIRATION
+
+exports.EMAIL_TO = env.EMAIL_TO
+
+exports.EMAIL_FROM = env.EMAIL_FROM
+
+exports.JWT_RESET_PASSWORD = env.JWT_RESET_PASSWORD

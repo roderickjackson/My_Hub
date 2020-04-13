@@ -2,8 +2,6 @@
 
 const ApiGateway = require("moleculer-web");
 
-let console = (obj) => console.log('this ---->', obj)
-
 module.exports = {
 	name: "api",
 	logLevel: "info",

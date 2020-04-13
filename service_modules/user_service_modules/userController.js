@@ -1,6 +1,9 @@
 const bcrypt = require("bcryptjs")
+const sgMail = require('@sendgrid/mail')
+const {SENDGRID_API_KEY} = require('../constants')
+sgMail.setApiKey(SENDGRID_API_KEY)
 const v = require('../user_service_modules/userValidation')
-const auth = require('../auth_service_module/auth')
+const auth = require('../auth_service_module/auth_service')
 
 // Models
 const User = require('./userModel')
@@ -23,6 +26,7 @@ exports.createUser = async (ctx) => {
 					throw new Error("Email already exists")
 				}
 
+				// let signedToken = auth.signTokenForActivation(user, email)
 				let user = new User(ctx.params)
 				await user.save()
     }
@@ -40,7 +44,6 @@ exports.createUser = async (ctx) => {
 exports.retriveUserToken = async (ctx) => {
     try {
         const {email, password} = ctx.params
-
 				let user = await User.findOne({email}).lean()
         let isPasswordValid = await bcrypt.compare(password, user.password)
         
@@ -55,6 +58,6 @@ exports.retriveUserToken = async (ctx) => {
 				return signedToken
     }
     catch (error){
-        new MoleculerClientError("Email is exist!", 422, "", [{ field: "email", message: error}])
+        throw new Error(error)
     }
 }

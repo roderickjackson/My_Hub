@@ -40,22 +40,26 @@ module.exports = {
 		* Test action
 		*/
 		test(ctx) {
-			return this.Promise.resolve("Hello Moleculer user");
+			console.log("Console Logging here -->", ctx.params)
+			return `${ctx.params}, John`;
 		},
 
 		/**
-		 * Register user
+		 * @route Post /user/register
+		 * @desc Register user
+		 * @access Public
+		 * @ctx = {email, password, firstName, lastName}
 		 */
 		register(ctx){
 			return createUser(ctx)
 		},
 
-	/**
-	 * @route Get /user/login
-	 * @desc Login user
-	 * @access Public
-	 * @ctx = {email, password}
-	 */
+		/**
+		 * @route Get /user/login
+		 * @desc Login user
+		 * @access Public
+		 * @ctx = {email, password}
+		 */
 		login(ctx){
 			return retriveUserToken(ctx)
 		}
