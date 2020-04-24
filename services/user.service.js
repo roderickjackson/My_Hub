@@ -1,9 +1,6 @@
 "use strict";
-const userController = require('../service_modules/user_service_modules/userController')
-const databaseConnection = require('../service_modules/db_service_modules/db_service')
-
-let createUser = userController.createUser
-let retriveUserToken = userController.retriveUserToken
+const { signupUser,createUser, retriveUserToken} = require('../service_modules/user_service_modules/userController')
+const databaseConnection = require('../service_modules/db_service_modules/db_connection')
 
 databaseConnection()
 /**
@@ -51,7 +48,19 @@ module.exports = {
 		 * @ctx = {email, password, firstName, lastName}
 		 */
 		register(ctx){
+			// signupUser(findUserByEmail, validate, sendSignupEmail, ctx)
 			return createUser(ctx)
+		},
+
+		/**
+		 * @route Post /user/signup
+		 * @desc Signup user
+		 * @access Public
+		 * @ctx = {email, password, firstName, lastName}
+		 */
+		signup(ctx){
+			// signupUser(findUserByEmail, validate, sendSignupEmail, ctx)
+			return signupUser(ctx)
 		},
 
 		/**

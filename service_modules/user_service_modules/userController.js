@@ -1,12 +1,36 @@
 const bcrypt = require("bcryptjs")
-const sgMail = require('@sendgrid/mail')
-const {SENDGRID_API_KEY} = require('../constants')
-sgMail.setApiKey(SENDGRID_API_KEY)
-const v = require('../user_service_modules/userValidation')
-const auth = require('../auth_service_module/auth_service')
+// const sgMail = require('@sendgrid/mail')
+// const {SENDGRID_API_KEY} = require('../constants')
+// sgMail.setApiKey(SENDGRID_API_KEY)
+const {validatePassword, validateUserInput, validateUser} = require('../user_service_modules/userValidation')
+const {signToken, signTokenForAccountActivation} = require('../auth_service_module/auth_service')
+const {sendMail} = require('../mail_service_module/index')
+const {findDocumentByKey} = require('../db_service_modules/db_access')
+const ACCOUNT_ACTIVATION = 'ACCOUNT_ACTIVATION'
 
 // Models
 const User = require('./userModel')
+
+ /**
+ * @route Post /users/signup
+ * @desc Signup user
+ * @access Public
+ * @ctx = {email, password, firstName, lastName}
+ */
+exports.signupUser = async (ctx) => {
+	const {email, firstName, lastName} = ctx.params
+	const findUserByEmail = await findDocumentByKey(User, email)
+	const token = signTokenForAccountActivation(email, firstName, lastName)
+	
+	validateUserInput(ctx)
+	console.log('past validate')
+	console.log('findUserByEmail', findUserByEmail)
+	if (findUserByEmail){
+		throw new Error("Email already exists")
+	}
+	
+	sendMail(ACCOUNT_ACTIVATION, token, email)
+}
 
 /**
  * @route Post /users/register
@@ -16,7 +40,7 @@ const User = require('./userModel')
  */
 exports.createUser = async (ctx) => {
 	console.log("REQUEST ---> REQUEST --->", ctx.params)
-    v.validateUserInput(ctx)
+    validateUserInput(ctx)
 
     try {
 				const {email} = ctx.params
@@ -48,14 +72,14 @@ exports.retriveUserToken = async (ctx) => {
         let isPasswordValid = await bcrypt.compare(password, user.password)
         
         // May need to change the name of this variable to better match what it's doing needs better error handling
-        v.validateUser(user)
-        v.validatePassword(isPasswordValid)
+        // validateUser(user)
+        // validatePassword(isPasswordValid)
         
-				let signedToken = auth.signToken(user, email)
+				let token = signToken(user, email)
 				
 				console.log('signedToken', signedToken)
 
-				return signedToken
+				return token
     }
     catch (error){
         throw new Error(error)

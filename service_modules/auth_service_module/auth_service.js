@@ -14,12 +14,10 @@ exports.signToken = (user, email) => {
 		)
 }
 
-exports.signTokenForActivation = (user, email) => {
-
-    let {_id} = user
+exports.signTokenForAccountActivation = (email, firstName, lastName) => {
 
     return jwt.sign(
-			{id: _id, email}, 
+			{email, firstName, lastName}, 
 			JWT_ACCOUNT_ACTIVATION, 
 			{expiresIn: JWT_EXPIRATION}
 		)

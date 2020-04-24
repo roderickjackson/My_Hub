@@ -1,27 +1,32 @@
-const Validator = require('fastest-validator')
+const {validateAgainstSchema, validateExistenceOfObject, createValidationObj} = require('../validation_service_module/validations')
 
-let v = new Validator()
+const EMAIL_VALIDATION_MESSAGE = 'A user with this email could not be found'
 
-/**
- * Validating the following:
- * * Email
- * * Password
- * * First Name
- * * Last Name
- */
- exports.validateUserInput = (data) => {
-    validataionSchema = {
-        email: {type: "email"},
-        password: {type: "string", min: 4},
-        firstName: {type: "string", min: 2},
-        lastName: {type: "string", min: 2}
-     }
+const PASSWORD_VALIDATION_MESSAGE = 'A user with this password could not be found'
 
-    check = v.compile(validataionSchema)
+const EMAIL_VALIDATION_CODE = 422
 
+const PASSWORD_VALIDATION_CODE = 201
+
+const userValidataionSchema = {
+		email: {type: "email"},
+		password: {type: "string", min: 4},
+		firstName: {type: "string", min: 2},
+		lastName: {type: "string", min: 2}
+ }
+ 
+ /**
+	* Validating the following user inputs: 
+	* @Email
+	* @Password
+	* @First_Name
+	* @Last_Name
+	*/
+	exports.validateUserInput = (data) => {
+		const validateAgainstUserSchema = validateAgainstSchema(userValidataionSchema)
     const {email, password, firstName, lastName} = data.params
 
-    return check({
+    return validateAgainstUserSchema({
         email: email,
         password: password,
         firstName: firstName,
@@ -33,38 +38,14 @@ let v = new Validator()
  * Validate if there is a user with this email
  */
 exports.validateUser = (user) => {
-    let ctx = {
-        obj: user,
-        message: 'A user with this email could not be found',
-        code: 422
-    }
-    validate(ctx)
+	const obj = createValidationObj(user, EMAIL_VALIDATION_MESSAGE, EMAIL_VALIDATION_CODE)
+  validateExistenceOfObject(obj)
 }
 
 /**
  * Validate if password is correct
  */
 exports.validatePassword = (password) => {
-    let ctx = {
-        obj: password,
-        message: 'Wrong password',
-        code: 401
-    }
-    validate(ctx)
-}
-
-/**
- * Private functions
- */
-function validate(ctx){
-    const {obj, message, code} = ctx
-    if(!obj){
-        const error = new Error(message)
-        error.statusCode = code
-    
-        throw error
-    }
-    else{
-        return obj
-    }
+	const obj = createValidationObj(password, PASSWORD_VALIDATION_MESSAGE, PASSWORD_VALIDATION_CODE)
+	validateExistenceOfObject(obj)
 }
