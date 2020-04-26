@@ -48,21 +48,21 @@ exports.activateUserAccount = (ctx) => {
  * @ctx = {email, password}
  */
 exports.retriveUserToken = async (ctx) => {
-    try {
-				const {email, password} = ctx.params
-				const user = await findDocumentByKey(User, email)
-        const isPasswordValid = await bcrypt.compare(password, user.password)
-        
-        validateIfUserObjIsEmpty(user)
-        validateIfPasswordObjIsEmpty(isPasswordValid)
-        
-				const token = signToken(user, email)
-				
-				console.log('signedToken', signedToken)
+	try {
+		const {email, password} = ctx.params
+		const user = await findDocumentByKey(User, email)
+		const isPasswordValid = await bcrypt.compare(password, user.password)
+		
+		validateIfUserObjIsEmpty(user)
+		validateIfPasswordObjIsEmpty(isPasswordValid)
+		
+		const token = signToken(user, email)
+		
+		console.log('signedToken', signedToken)
 
-				return token
-    }
-    catch (error){
-        throw new Error(error)
-    }
+		return token
+	}
+	catch (error){
+		throw new Error(error)
+	}
 }
