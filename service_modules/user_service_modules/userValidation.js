@@ -9,21 +9,21 @@ const EMAIL_VALIDATION_CODE = 422
 const PASSWORD_VALIDATION_CODE = 201
 
 const userValidataionSchema = {
-		email: {type: "email"},
-		password: {type: "string", min: 4},
-		firstName: {type: "string", min: 2},
-		lastName: {type: "string", min: 2}
+        email: {type: "email"},
+        password: {type: "string", min: 4},
+        firstName: {type: "string", min: 2},
+        lastName: {type: "string", min: 2}
  }
  
  /**
-	* Validating the following user inputs: 
-	* @Email
-	* @Password
-	* @First_Name
-	* @Last_Name
-	*/
-	exports.validateUserInput = (data) => {
-		const validateAgainstUserSchema = validateAgainstSchema(userValidataionSchema)
+    * Validating the following user inputs: 
+    * @Email
+    * @Password
+    * @First_Name
+    * @Last_Name
+    */
+    exports.validateUserInput = (data) => {
+        const validateAgainstUserSchema = validateAgainstSchema(userValidataionSchema)
         const {email, password, firstName, lastName} = data.params
 
         return validateAgainstUserSchema({
@@ -40,7 +40,7 @@ const userValidataionSchema = {
  * submitted through the login form.
  */
 exports.validateIfUserObjIsEmpty = (user) => {
-	const obj = createValidationObj(user, EMAIL_VALIDATION_MESSAGE, EMAIL_VALIDATION_CODE)
+    const obj = createValidationObj(user, EMAIL_VALIDATION_MESSAGE, EMAIL_VALIDATION_CODE)
     validateExistenceOfObject(obj)
 }
 
@@ -50,12 +50,12 @@ exports.validateIfUserObjIsEmpty = (user) => {
  * submitted through the login form.
  */
 exports.validateIfPasswordObjIsEmpty = (password) => {
-	const obj = createValidationObj(password, PASSWORD_VALIDATION_MESSAGE, PASSWORD_VALIDATION_CODE)
-	validateExistenceOfObject(obj)
+    const obj = createValidationObj(password, PASSWORD_VALIDATION_MESSAGE, PASSWORD_VALIDATION_CODE)
+    validateExistenceOfObject(obj)
 }
 
 exports.validateIfUserExists = (user) => {
-	if(user){
-		throw new Error("Email already exists")
-	}
+    if(user){
+        throw new Error("Email already exists")
+    }
 }
