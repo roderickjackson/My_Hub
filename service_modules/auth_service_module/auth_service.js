@@ -3,9 +3,9 @@ const {TOKEN_SECRET_OR_KEY, JWT_EXPIRATION, JWT_ACCOUNT_ACTIVATION} = require('.
 
 
 exports.signToken = (user, email) => {
-    const {_id} = user
+        const {_id} = user
 
-    return jwt.sign(
+        return jwt.sign(
 			{id: _id, email}, 
 			TOKEN_SECRET_OR_KEY, 
 			{expiresIn:JWT_EXPIRATION}
@@ -13,7 +13,7 @@ exports.signToken = (user, email) => {
 }
 
 exports.signTokenForAccountActivation = (email, password, firstName, lastName) => {
-    return jwt.sign(
+        return jwt.sign(
 			{email, password, firstName, lastName}, 
 			JWT_ACCOUNT_ACTIVATION, 
 			{expiresIn: JWT_EXPIRATION}

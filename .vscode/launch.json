@@ -23,8 +23,8 @@
 			"args": ["--runInBand"],
 			"cwd": "${workspaceRoot}",
 			"runtimeArgs": [
-                "--nolazy"
-            ]
+                                "--nolazy"
+                        ]
 		}
 	]
 }

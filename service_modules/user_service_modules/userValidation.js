@@ -24,14 +24,14 @@ const userValidataionSchema = {
 	*/
 	exports.validateUserInput = (data) => {
 		const validateAgainstUserSchema = validateAgainstSchema(userValidataionSchema)
-    const {email, password, firstName, lastName} = data.params
+        const {email, password, firstName, lastName} = data.params
 
-    return validateAgainstUserSchema({
-        email,
-        password,
-        firstName,
-        lastName
-    })
+        return validateAgainstUserSchema({
+                email,
+                password,
+                firstName,
+                lastName
+        })
  }
  
 /**
@@ -41,7 +41,7 @@ const userValidataionSchema = {
  */
 exports.validateIfUserObjIsEmpty = (user) => {
 	const obj = createValidationObj(user, EMAIL_VALIDATION_MESSAGE, EMAIL_VALIDATION_CODE)
-  validateExistenceOfObject(obj)
+    validateExistenceOfObject(obj)
 }
 
 /**
