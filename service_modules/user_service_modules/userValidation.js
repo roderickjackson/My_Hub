@@ -27,25 +27,35 @@ const userValidataionSchema = {
     const {email, password, firstName, lastName} = data.params
 
     return validateAgainstUserSchema({
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName
+        email,
+        password,
+        firstName,
+        lastName
     })
  }
  
 /**
- * Validate if there is a user with this email
+ * The purpose of the validateIfUserObjIsEmpty function is to validate
+ * if there is a user in the database with the same email that was
+ * submitted through the login form.
  */
-exports.validateUser = (user) => {
+exports.validateIfUserObjIsEmpty = (user) => {
 	const obj = createValidationObj(user, EMAIL_VALIDATION_MESSAGE, EMAIL_VALIDATION_CODE)
   validateExistenceOfObject(obj)
 }
 
 /**
- * Validate if password is correct
+ * The purpose of the validateIfPasswordObjIsEmpty function is to validate
+ * if there is a user in the database with the same password that was
+ * submitted through the login form.
  */
-exports.validatePassword = (password) => {
+exports.validateIfPasswordObjIsEmpty = (password) => {
 	const obj = createValidationObj(password, PASSWORD_VALIDATION_MESSAGE, PASSWORD_VALIDATION_CODE)
 	validateExistenceOfObject(obj)
+}
+
+exports.validateIfUserExists = (user) => {
+	if(user){
+		throw new Error("Email already exists")
+	}
 }

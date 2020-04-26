@@ -16,6 +16,7 @@ exports.saveNewDocument = async (newInstanceOfModel) => {
 		await newInstanceOfModel.save
 	}
 	catch(error){
+		console.log(`ERROR SAVING NEW DOCUMENT`, error)
 		throw new Error(error)
 	}
 }
